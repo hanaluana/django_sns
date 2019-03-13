@@ -1,8 +1,40 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from board.models import Article
+from IPython import embed
 
 def article_list(request):
-    pass
+    articles = Article.objects.all().order_by('-id')
+    # embed()
+    return render(request, 'board/list.html', {'articles':articles})
 
 def article_detail(request, article_id):
-    pass
+    article = get_object_or_404(Article, id=article_id)
+    return render(request, 'board/detail.html',{'article':article})
 
+def create_article(request):
+    if request.method=="GET":
+        return render(request, 'board/new.html')
+    else:
+        article = Article()
+        article.title = request.POST.get('title')
+        article.content = request.POST.get('content')
+        article.save()
+        return redirect('board:article_detail',article.id)
+
+def update_article(request, article_id):
+    article = Article.objects.get(id=article_id)
+    if request.method=="GET":
+        return render(request, 'board/update.html', {'article':article})
+    else:
+        article.title = request.POST.get('title')
+        article.content = request.POST.get('content')
+        article.save()
+        return redirect('board:article_detail',article.id)
+
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if request.method == "POST":
+        article.delete()
+        return redirect('board:article_list')
+    elif request.method == "GET":
+        return redirect('board:article_detail', article_id)

@@ -1,0 +1,28 @@
+{% extends 'board/base.html' %}
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+{% block button %}
+    <a href="{% url 'board:article_list' %}">
+        <button>Article List</button>
+    </a>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ article.title }}</h1>
+    <p>
+        {{ article.content }}
+    </p>
+    <p>
+        {{ article.like }}
+    </p>
+    <div>
+        <form action="{% url 'board:delete_article' article.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('삭제함?')">Delete</button>
+        </form>
+        <a href="{%  url 'board:update_article' article.id %}">
+            <button>Update</button>
+        </a>
+    </div>
+{% endblock %}
