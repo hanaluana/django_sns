@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from board.models import Article
+from board.models import Article, Comment
 from IPython import embed
 
 def article_list(request):
@@ -9,7 +9,8 @@ def article_list(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    return render(request, 'board/detail.html',{'article':article})
+    comments = article.comment_set.all()
+    return render(request, 'board/detail.html',{'article':article, 'comments':comments})
 
 def create_article(request):
     if request.method=="GET":
@@ -38,3 +39,18 @@ def delete_article(request, article_id):
         return redirect('board:article_list')
     elif request.method == "GET":
         return redirect('board:article_detail', article_id)
+
+def create_comment(request,article_id):
+    article = get_object_or_404(Article, id=article_id)
+    comment = Comment()
+    comment.content = request.POST.get('content')
+    comment.article = article
+    comment.save()
+    return redirect('board:article_detail',article.id)
+
+def delete_comment(request, article_id, comment_id):
+    article = get_object_or_404(Article, id=article_id)
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.method == 'POST':
+        comment.delete()
+    return redirect('board:article_detail',article.id)

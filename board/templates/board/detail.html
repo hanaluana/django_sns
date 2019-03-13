@@ -21,8 +21,10 @@
             {% csrf_token %}
             <button type="submit" onclick="return confirm('삭제함?')">Delete</button>
         </form>
-        <a href="{%  url 'board:update_article' article.id %}">
+        <a href="{% url 'board:update_article' article.id %}">
             <button>Update</button>
         </a>
     </div>
+    <hr>
+    {% include 'board/_comment.html' %}
 {% endblock %}
