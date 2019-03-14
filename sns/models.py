@@ -13,6 +13,7 @@ class Posting(models.Model):
 
     # Resize
     image = ProcessedImageField(
+        blank=True,
         upload_to='postings/resize/%Y%m%d',
         processors=[ResizeToFit(width=960, upscale=False)],
         format='JPEG'
@@ -28,6 +29,14 @@ class Posting(models.Model):
 
     def __str__(self):
         return f'{self.id}: {self.content[:20]}'
+
+    def save(self, *args, **kwargs):
+         super().save(*args,**kwargs)
+         print(f'\n=== Saved Posting with id:{self.id} ===')
+         print(f'    content:{self.content}')
+         if self.image:
+             print(f'    image:{self.image.width}px * {self.image.height}px: {round(self.image.size/1024)}kb')
+         print('================================\n')
 
 class Comment(models.Model):
 

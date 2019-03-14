@@ -1,0 +1,26 @@
+{% extends 'sns/base.html' %}
+
+{% block is_detail %}active {% endblock %}
+
+
+{% block body %}
+    <div class="row mt-3">
+        <div class="col-12 col-md-6">
+            <div class="card mb-3">
+                {% if posting.image %}
+                    <img src="{{ posting.image.url }}" alt="{{ posting.image }}" class="card-img-top image-fluid">
+                {% else %}
+                    <img src="http://picsum.photos/520/720/?random" alt="random-image" class="card-img-top image-fluid">
+                {% endif %}
+                <div class="card-body">
+                    <i class="{{ posting.icon }} fa-2x"></i>
+                    <hr>
+                    <p class="card-test">
+                        {{ posting.content }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% include 'sns/_comments.html' %}
+    </div>
+{% endblock %}
