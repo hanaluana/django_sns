@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('board/', include('board.urls')),
+    path('sns/', include('sns.urls'))
 ]
 
 # Dev에서는 꼭 써야함. (Debug=True 일 때 꼭 있어야 됨. 만약 False이면 이 줄은 빈 리스트를 반환함)
