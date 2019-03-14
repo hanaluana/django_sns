@@ -24,4 +24,4 @@ urlpatterns = [
 ]
 
 # Dev에서는 꼭 써야함. (Debug=True 일 때 꼭 있어야 됨. 만약 False이면 이 줄은 빈 리스트를 반환함)
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_URL)
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
