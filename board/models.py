@@ -5,10 +5,10 @@ class Article (models.Model) :
     content = models.TextField(default='')
     like = models.IntegerField(default=0)
     def __str__(self) :
-        return f'{self.id}: {self.title[:20]}'
+        return '{}: {}'.format(self.id, self.title[:20])
 
 class Comment (models.Model) :
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.CharField(max_length=100, default='')
     def __str__(self):
-        return f'{self.article.title}: {self.content[:20]}'
+        return '{}: {}'.format(self.article.title, self.content[:20])

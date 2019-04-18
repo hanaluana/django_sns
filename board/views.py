@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from board.models import Article, Comment
-from IPython import embed
 
 def article_list(request):
     articles = Article.objects.all().order_by('-id')
